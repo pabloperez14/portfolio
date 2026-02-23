@@ -70,11 +70,11 @@ export const About: React.FC = () => {
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
             {skillCategories.map((category, idx) => (
-              <div key={idx} className={idx === 2 ? "md:col-span-2 flex flex-col items-center md:px-12" : "flex flex-col"}>
-                <h4 className={`font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2 w-full ${idx === 2 ? "text-center md:w-3/4 mx-auto" : ""}`}>
+              <div key={idx} className={`flex flex-col items-center ${idx === 2 ? "md:col-span-2 md:px-12" : "md:items-start"}`}>
+                <h4 className={`font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2 w-full text-center ${idx === 2 ? "md:w-3/4 mx-auto" : "md:text-left"}`}>
                   {category.title}
                 </h4>
-                <div className={`flex flex-wrap gap-3 ${idx === 2 ? "justify-center" : ""}`}>
+                <div className={`flex flex-wrap gap-3 justify-center ${idx === 2 ? "" : "md:justify-start"}`}>
                   {category.items.map((skill, index) => (
                     <span key={index} className="flex items-center gap-2.5 px-5 py-2.5 bg-white/[0.03] hover:bg-white/[0.08] transition-colors border border-white/10 rounded-full text-sm font-mono text-neutral-300 backdrop-blur-sm cursor-default shadow-sm shadow-black/20">
                       {skill.icon}
