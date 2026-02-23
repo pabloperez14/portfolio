@@ -7,6 +7,7 @@ import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FilmGrain } from './components/FilmGrain';
+import { AmbientCursor } from './components/AmbientCursor';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
   return (
     <ReactLenis root options={{ lerp: 0.08, smoothWheel: true }}>
       <main className="bg-[#050505] min-h-screen w-full relative">
+        <AmbientCursor />
         <FilmGrain />
         {/* Navigation */}
         <Navbar />

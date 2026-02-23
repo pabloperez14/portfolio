@@ -294,7 +294,7 @@ export const Projects: React.FC = () => {
   }, [selectedId]);
 
   return (
-    <section id="projects" className="py-24 px-6 bg-[#050505]">
+    <section id="projects" className="pt-40 md:pt-56 pb-24 px-6 bg-[#050505]">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
