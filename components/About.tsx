@@ -1,5 +1,18 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { FaJava } from 'react-icons/fa';
+import { SiSpring, SiDocker, SiReact, SiMysql, SiShopify, SiMongodb, SiGit } from 'react-icons/si';
+
+const skills = [
+  { name: "Java", icon: <span className="text-[#f89820] flex items-center"><FaJava size={14} /></span> },
+  { name: "Spring Boot", icon: <span className="text-[#6db33f] flex items-center"><SiSpring size={14} /></span> },
+  { name: "Docker", icon: <span className="text-[#2496ed] flex items-center"><SiDocker size={14} /></span> },
+  { name: "React", icon: <span className="text-[#61dafb] flex items-center"><SiReact size={14} /></span> },
+  { name: "SQL", icon: <span className="text-[#4479A1] flex items-center"><SiMysql size={14} /></span> },
+  { name: "Shopify API", icon: <span className="text-[#95BF47] flex items-center"><SiShopify size={14} /></span> },
+  { name: "MongoDB", icon: <span className="text-[#47A248] flex items-center"><SiMongodb size={14} /></span> },
+  { name: "Git", icon: <span className="text-[#F05032] flex items-center"><SiGit size={14} /></span> },
+];
 
 export const About: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
@@ -39,9 +52,10 @@ export const About: React.FC = () => {
           </div>
 
           <div className="mt-12 flex flex-wrap gap-3">
-            {["Java", "Spring Boot", "Docker", "React", "SQL", "Shopify API", "MongoDB", "Git"].map((skill, index) => (
-              <span key={index} className="px-4 py-2 bg-neutral-900 border border-white/5 rounded-full text-xs font-mono text-neutral-300">
-                {skill}
+            {skills.map((skill, index) => (
+              <span key={index} className="flex items-center gap-2 px-4 py-2 bg-white/[0.03] hover:bg-white/[0.08] transition-colors border border-white/10 rounded-full text-xs font-mono text-neutral-300 backdrop-blur-sm cursor-default">
+                {skill.icon}
+                {skill.name}
               </span>
             ))}
           </div>

@@ -3,6 +3,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../projectsData';
 import { Project } from '../types';
 import { X, ExternalLink } from 'lucide-react';
+import { FaJava } from 'react-icons/fa';
+import { SiSpring, SiDocker, SiReact, SiMysql, SiShopify, SiMongodb, SiGit, SiTypescript, SiVite, SiVercel, SiAmazon } from 'react-icons/si';
+
+// Helper for dynamic tech icons matching the premium badges design
+export const getTechBadge = (tech: string) => {
+  const t = tech.toLowerCase();
+  let icon = null;
+  if (t.includes('java spring') || t.includes('spring')) icon = <span className="text-[#6db33f]"><SiSpring size={12} /></span>;
+  else if (t.includes('java')) icon = <span className="text-[#f89820]"><FaJava size={12} /></span>;
+  else if (t.includes('react')) icon = <span className="text-[#61dafb]"><SiReact size={12} /></span>;
+  else if (t.includes('docker')) icon = <span className="text-[#2496ed]"><SiDocker size={12} /></span>;
+  else if (t.includes('shopify')) icon = <span className="text-[#95BF47]"><SiShopify size={12} /></span>;
+  else if (t.includes('typescript')) icon = <span className="text-[#3178c6]"><SiTypescript size={12} /></span>;
+  else if (t.includes('vite')) icon = <span className="text-[#646cff]"><SiVite size={12} /></span>;
+  else if (t.includes('vercel')) icon = <span className="text-white"><SiVercel size={12} /></span>;
+  else if (t.includes('amazon')) icon = <span className="text-[#FF9900]"><SiAmazon size={12} /></span>;
+  else if (t.includes('seo') || t.includes('algoritmia') || t.includes('lógica') || t.includes('resiliencia')) icon = null; // No specific brand icon
+
+  return (
+    <span key={tech} className="flex items-center gap-1.5 px-3 py-1 bg-white/[0.03] border border-white/5 rounded-full text-[10px] md:text-xs font-mono text-neutral-300">
+      {icon}
+      {tech}
+    </span>
+  );
+};
 
 // Interfaz para las props
 interface ProjectCardProps {
@@ -121,13 +146,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, selectedId, setSelec
             {project.shortDescription}
           </motion.p>
           <div className="mt-4 flex gap-2 flex-wrap">
-            {project.tech.slice(0, 3).map((t: string, i: number) => (
-              <span key={i} className="text-[10px] font-mono text-neutral-400 border border-white/5 px-2 py-1 rounded-sm">
-                {t}
-              </span>
-            ))}
+            {project.tech.slice(0, 3).map((t: string) => getTechBadge(t))}
             {project.tech.length > 3 && (
-              <span className="text-[10px] font-mono text-neutral-600 px-1 py-1">+{project.tech.length - 3}</span>
+              <span className="flex items-center justify-center px-2 py-1 bg-white/[0.03] border border-white/5 rounded-full text-[10px] font-mono text-neutral-500">
+                +{project.tech.length - 3}
+              </span>
             )}
           </div>
         </div>
@@ -199,16 +222,16 @@ const ModalContent: React.FC<ModalContentProps> = ({ selectedProject, setSelecte
               {selectedProject.shortDescription}
             </p>
           </div>
-          <div className="shrink-0 flex flex-col sm:flex-row items-center gap-3">
+          <div className="w-full md:shrink-0 md:w-auto flex flex-row items-center gap-3">
             {selectedProject.link && (
               <a
-                href={selectedProject.link} target="_blank" rel="noreferrer" className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3 bg-white text-black text-sm font-medium rounded-xl hover:bg-neutral-200 transition-colors">
-                Ver Proyecto <ExternalLink size={16} />
+                href={selectedProject.link} target="_blank" rel="noreferrer" className="flex-1 md:w-auto flex items-center justify-center gap-2 px-4 md:px-6 py-3 bg-white text-black text-xs md:text-sm font-medium rounded-xl hover:bg-neutral-200 transition-colors">
+                Proyecto <ExternalLink size={14} />
               </a>
             )}
             {selectedProject.video && (
               <a
-                href={selectedProject.video} target="_blank" rel="noreferrer" className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3 bg-[#1a1a1a] text-white border border-white/10 text-sm font-medium rounded-xl hover:bg-neutral-800 transition-colors">
+                href={selectedProject.video} target="_blank" rel="noreferrer" className="flex-1 md:w-auto flex items-center justify-center gap-2 px-4 md:px-6 py-3 bg-[#1a1a1a] text-white border border-white/10 text-xs md:text-sm font-medium rounded-xl hover:bg-neutral-800 transition-colors">
                 Ver Demo
               </a>
             )}
@@ -228,9 +251,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ selectedProject, setSelecte
             <div>
               <h4 className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4">Stack Tecnológico</h4>
               <div className="flex flex-wrap gap-2">
-                {selectedProject.tech.map((tech) => (
-                  <span key={tech} className="px-3 py-1.5 bg-neutral-900 border border-white/10 rounded-md text-sm text-neutral-300 font-mono">{tech}</span>
-                ))}
+                {selectedProject.tech.map((tech) => getTechBadge(tech))}
               </div>
             </div>
           </div>
