@@ -9,8 +9,11 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-[#050505] selection:bg-white selection:text-black">
-      {/* Ultra-subtle Apple style radial dark gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.03)_0%,transparent_50%)] z-0 pointer-events-none" />
+      {/* Static Elegant Background (No GPU Blur Filters = No Mobile Flicker) */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ background: 'radial-gradient(circle at 50% 0%, #151515 0%, #050505 60%)' }}
+      />
 
       <div className="z-10 flex flex-col items-center w-full max-w-5xl px-6">
         <motion.div style={{ y: yText, opacity: opacityText }} className="flex flex-col items-center w-full">
