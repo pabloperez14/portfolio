@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../projectsData';
 import { Project } from '../types';
-import { X, ExternalLink } from 'lucide-react';
+import { X, ExternalLink, PlayCircle, ArrowUpRight } from 'lucide-react';
 import { FaJava } from 'react-icons/fa';
 import { SiSpring, SiDocker, SiReact, SiMysql, SiShopify, SiMongodb, SiGit, SiTypescript, SiVite, SiVercel, SiAmazon } from 'react-icons/si';
 
@@ -75,7 +75,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, selectedId, setSelec
       whileHover="hover"
       initial="rest"
       style={{ zIndex: selectedId === project.id ? 50 : (isHovered ? 40 : 'auto') }}
-      className="group cursor-pointer relative rounded-lg transition-all duration-500 transform-gpu bg-[#0a0a0a]"
+      className="group cursor-pointer relative rounded-lg transition-all duration-500 transform-gpu bg-[#0a0a0a] w-full h-full flex flex-col overflow-hidden shadow-xl shadow-black/20"
       viewport={{ once: true, margin: "-50px" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
@@ -99,12 +99,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, selectedId, setSelec
           <div className="w-2 h-2 rounded-full bg-neutral-700/50"></div>
         </div>
 
-        {/* Contenedor Multimedia */}
+        {/* Contenedor Multimedia (Conserva ratio 4:3 del video llenando su ancho completo) */}
         <motion.div
-          className="aspect-[4/3] overflow-hidden relative bg-neutral-900"
+          className="relative w-full aspect-[4/3] shrink-0 bg-neutral-950 overflow-hidden flex items-center justify-center border-b border-white/5"
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
-          {/* IMAGEN: Se oculta suavemente si hay video y estamos hover */}
+          {/* IMAGEN */}
           <motion.img
             variants={imageVariants}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -115,6 +115,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, selectedId, setSelec
               grayscale group-hover:grayscale-0
             `}
           />
+
+          {project.video && (
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none transition-all duration-500 ${isHovered ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
+              <div className="w-16 h-16 bg-black/40 backdrop-blur-md rounded-full border border-white/20 text-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <PlayCircle strokeWidth={1} size={48} className="opacity-90" />
+              </div>
+            </div>
+          )}
 
           {project.video && (
             <video
@@ -130,28 +138,37 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, selectedId, setSelec
         </motion.div>
 
         {/* Contenido Texto */}
-        <div className="p-6 relative z-20 bg-[#0a0a0a] flex-1">
+        <div className="p-6 relative z-20 bg-[#0a0a0a] flex-1 flex flex-col">
           <div className="mb-3">
             <motion.h3
-              className="text-xl font-sans font-medium text-white group-hover:text-neutral-200 transition-colors duration-500"
+              className="text-xl font-sans font-medium text-white group-hover:text-neutral-200 transition-colors duration-500 line-clamp-1"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               {project.title}
             </motion.h3>
           </div>
           <motion.p
-            className="text-sm text-neutral-500 font-light line-clamp-2"
+            className="text-sm text-neutral-500 font-light line-clamp-2 md:line-clamp-3"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             {project.shortDescription}
           </motion.p>
-          <div className="mt-4 flex gap-2 flex-wrap">
-            {project.tech.slice(0, 3).map((t: string) => getTechBadge(t))}
-            {project.tech.length > 3 && (
-              <span className="flex items-center justify-center px-2 py-1 bg-white/[0.03] border border-white/5 rounded-full text-[10px] font-mono text-neutral-500">
-                +{project.tech.length - 3}
-              </span>
-            )}
+
+          <div className="mt-auto pt-6 flex w-full items-end justify-between">
+            {/* Tech Badges (Izquierda) */}
+            <div className="flex gap-2 flex-wrap flex-1 pr-4">
+              {project.tech.slice(0, 3).map((t: string) => getTechBadge(t))}
+              {project.tech.length > 3 && (
+                <span className="flex items-center justify-center px-2 py-1 bg-white/[0.03] border border-white/5 rounded-full text-[10px] font-mono text-neutral-500">
+                  +{project.tech.length - 3}
+                </span>
+              )}
+            </div>
+
+            {/* Ver Detalles (Derecha, Anclado abajo) */}
+            <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-mono text-neutral-500 group-hover:text-white transition-all uppercase tracking-widest shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 duration-300">
+              Ver Detalles <ArrowUpRight size={14} className="relative -top-px" />
+            </div>
           </div>
         </div>
       </div>
@@ -189,11 +206,11 @@ const ModalContent: React.FC<ModalContentProps> = ({ selectedProject, setSelecte
         <X size={24} />
       </button>
 
-      {/* HEADER MULTIMEDIA (16:9) */}
-      <div className="relative w-full aspect-video shrink-0 bg-neutral-900 overflow-hidden rounded-t-2xl">
+      {/* HEADER MULTIMEDIA (Constrained Height) */}
+      <div className="relative w-full h-[35vh] md:h-[45vh] shrink-0 bg-neutral-950 overflow-hidden rounded-t-2xl flex items-center justify-center">
         <img
           src={selectedProject.image}
-          className="w-full h-full object-cover object-top grayscale-0"
+          className="w-full h-full object-contain grayscale-0"
           alt={selectedProject.imageAlt}
         />
 
@@ -205,7 +222,7 @@ const ModalContent: React.FC<ModalContentProps> = ({ selectedProject, setSelecte
             muted
             playsInline
             loop
-            className={"w-full h-full object-cover absolute inset-0 z-20 transition-opacity duration-1000 opacity-100"}
+            className={"w-full h-full object-contain absolute inset-0 z-20 transition-opacity duration-1000 opacity-100 bg-neutral-950"}
           />
         )}
 
@@ -311,7 +328,7 @@ export const Projects: React.FC = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 relative z-10 w-full xl:px-4">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} selectedId={selectedId} setSelectedId={setSelectedId} />
           ))}
@@ -319,7 +336,11 @@ export const Projects: React.FC = () => {
 
         <AnimatePresence>
           {selectedId && selectedProject && (
-            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-4 isolate">
+            <div
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-4 isolate"
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+            >
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
