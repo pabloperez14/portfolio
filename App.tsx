@@ -11,6 +11,7 @@ import { FilmGrain } from './components/FilmGrain';
 import { AmbientCursor } from './components/AmbientCursor';
 import { AvisoLegal } from './components/AvisoLegal';
 import { PoliticaPrivacidad } from './components/PoliticaPrivacidad';
+import { NotFound } from './components/NotFound';
 
 const Home = () => (
   <>
@@ -45,6 +46,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/aviso-legal" element={<AvisoLegal />} />
           <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         <Footer />
