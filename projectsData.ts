@@ -6,7 +6,7 @@ import { Project } from './types';
 export const projects: Project[] = [
   {
     id: 1,
-    title: "E-commerceRegalo Grabado",
+    title: "E-commerce Regalo Grabado",
     tech: ["Shopify Liquid", "SEO", "Google Merchant", "Ads"],
     shortDescription: "El inicio (2022). Gestión 360° E-commerce.",
     description: "En 2022, mi empresa necesitaba dar el salto digital. Sin conocimientos previos, dediqué semanas a investigar cómo funcionaban las tiendas online y creé un e-commerce desde cero en Shopify, adaptándolo para previsualizar productos personalizados. Gestioné productos, envíos, SEO y campañas de Ads. Un trabajo de 3 meses que resultó en un negocio funcional y rentable.",
