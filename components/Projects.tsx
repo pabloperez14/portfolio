@@ -144,7 +144,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, selectedId, setSelec
               className="text-xl font-sans font-medium text-white group-hover:text-neutral-200 transition-colors duration-500 line-clamp-1"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
-              {project.title}
+              {project.link ? (
+                <a href={project.link} onClick={(e) => { e.preventDefault(); }}>
+                  {project.title}
+                </a>
+              ) : (
+                project.title
+              )}
             </motion.h3>
           </div>
           <motion.p
@@ -241,13 +247,13 @@ const ModalContent: React.FC<ModalContentProps> = ({ selectedProject, setSelecte
           <div className="w-full md:shrink-0 md:w-auto flex flex-row flex-wrap items-center gap-3 mt-4 md:mt-0">
             {selectedProject.link && (
               <a
-                href={selectedProject.link} target="_blank" rel="noreferrer" className="flex-1 md:w-auto flex items-center justify-center gap-2 px-4 py-3 bg-white text-black text-xs md:text-sm font-medium rounded-xl hover:bg-neutral-200 transition-colors whitespace-nowrap">
+                href={selectedProject.link} target="_blank" rel="noopener" className="flex-1 md:w-auto flex items-center justify-center gap-2 px-4 py-3 bg-white text-black text-xs md:text-sm font-medium rounded-xl hover:bg-neutral-200 transition-colors whitespace-nowrap">
                 Proyecto <ExternalLink size={14} />
               </a>
             )}
             {selectedProject.video && (
               <a
-                href={selectedProject.video} target="_blank" rel="noreferrer" className="flex-1 md:w-auto flex items-center justify-center gap-2 px-4 py-3 bg-[#1a1a1a] text-white border border-white/10 text-xs md:text-sm font-medium rounded-xl hover:bg-neutral-800 transition-colors whitespace-nowrap">
+                href={selectedProject.video} target="_blank" rel="noopener" className="flex-1 md:w-auto flex items-center justify-center gap-2 px-4 py-3 bg-[#1a1a1a] text-white border border-white/10 text-xs md:text-sm font-medium rounded-xl hover:bg-neutral-800 transition-colors whitespace-nowrap">
                 Ver Demo
               </a>
             )}
